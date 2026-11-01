@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 import time
 from dotenv import load_dotenv
@@ -8,6 +10,24 @@ from core.extractor import extract_action_items, extract_key_decisions, extract_
 from core.rag_engine import build_rag_chain, ask_question
 
 load_dotenv()
+
+try:
+    streamlit_secrets = st.secrets
+except st.errors.StreamlitSecretNotFoundError:
+    streamlit_secrets = {}
+
+for key in (
+    "GROQ_API_KEY",
+    "GROQ_MODEL",
+    "LLM_PROVIDER",
+    "MISTRAL_API_KEY",
+    "MISTRAL_MODEL",
+    "SARVAM_API_KEY",
+    "SARVAM_STT_MODEL",
+    "WHISPER_MODEL",
+):
+    if key in streamlit_secrets:
+        os.environ[key] = str(streamlit_secrets[key])
 
 # ─── Page Config ────────────────────────────────────────────────────────────────
 st.set_page_config(

@@ -10,7 +10,7 @@ Use Python 3.10 or 3.11, install FFmpeg, create a virtual environment, and insta
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
-pip install -r Requirements.txt
+pip install -r requirements.txt
 ```
 
 Copy `.env.example` to `.env` and provide the API keys needed by the selected providers.
@@ -34,3 +34,20 @@ python -m unittest discover -s tests -v
 ```
 
 FFmpeg must be installed separately and available through `ffmpeg -version`.
+
+## Deploy on Streamlit Community Cloud
+
+1. Push this repository to GitHub.
+2. Create an app at [Streamlit Community Cloud](https://share.streamlit.io/) using `app.py` as the entry point and Python 3.11.
+3. Add the required provider credentials in the app's **Settings → Secrets**. For the default Groq provider:
+
+   ```toml
+   LLM_PROVIDER = "groq"
+   GROQ_API_KEY = "your-groq-api-key"
+   GROQ_MODEL = "openai/gpt-oss-20b"
+   WHISPER_MODEL = "tiny"
+   ```
+
+   Add `SARVAM_API_KEY` to enable Hinglish transcription. Keep credentials out of GitHub.
+
+The app uses FFmpeg, installed from `packages.txt`. Initial transcription and retrieval-model downloads may take a few minutes. The deployed app can access YouTube URLs, but not file paths on your computer.

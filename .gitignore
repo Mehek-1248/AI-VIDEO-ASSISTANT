@@ -1,7 +1,8 @@
 # Local environments and secrets
 .venv/
 .env
-
+.venv-run/
+.streamlit/secrets.toml
 # Python caches
 __pycache__/
 *.py[cod]
